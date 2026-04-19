@@ -1,0 +1,35 @@
+# Pirate Shores Security Lab
+
+A Flask web app I’m building to better understand how web apps work while learning cybersecurity.
+
+## Overview
+This project is me learning by building. I’m starting simple, then I’ll be breaking it (SQL injection, brute force, etc) and fixing it so I actually understand how these attacks work.
+while learning Python, Flask and HTML.
+
+## Current Features
+- Login page with Flask  
+- Form input working  
+- Uses POST requests  
+- Basic username/password check  
+
+## Why I’m doing this
+- To actually understand how login systems work  
+- To learn cybersecurity by testing things myself  
+- To get comfortable with backend logic and how data flows  
+
+## Tech
+- Python  
+- Flask  
+- HTML  
+
+## Progress
+
+### Day 2
+- Built the login page  
+- Got GET and POST working  
+- Added a simple username/password check  
+
+### Day 1
+- Set up Flask  
+- Made basic routes (`/`, `/data`)  
+- Got it running in the browser  

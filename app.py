@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template, redirect, url_for
+import sqlite3
 
 app = Flask(__name__)
 
@@ -18,13 +19,28 @@ def data():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
+
+        # get what user typed
         username = request.form.get("pirate")
         password = request.form.get("shores")
 
-        if username != "pirate" or password != "shores":
-            return render_template("login.html", error="Invalid Pirate")
-        else:
+        conn = sqlite3.connect("users.db")
+        cursor = conn.cursor()
+
+        # run query using variables
+        cursor.execute(
+            "SELECT * FROM users WHERE username = ? AND password = ?",
+            (username, password)
+        )
+
+        # get result
+        result = cursor.fetchone()
+
+        # check result
+        if result:
             return f"Welcome: {username}"
+        else:
+            return render_template("login.html", error="Invalid login")
 
     return render_template("login.html")
         
