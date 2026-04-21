@@ -3,14 +3,15 @@
 A Flask web app I’m building to better understand how web apps work while learning cybersecurity.
 
 ## Overview
-This project is me learning by building. I’m starting simple, then I’ll be breaking it (SQL injection, brute force, etc) and fixing it so I actually understand how these attacks work.
-while learning Python, Flask and HTML.
+This project is me learning by building. I’m starting simple, then I’ll be breaking it (SQL injection, brute force, etc) and fixing it so I actually understand how these attacks work while learning Python, Flask and HTML.
 
 ## Current Features
 - Login page with Flask  
-- Form input working  
+- SQLite database to store user credentials  
 - Uses POST requests  
-- Basic username/password check  
+- App checks if credentials match  
+- Password hashing  
+- User-specific homepage
 
 ## Why I’m doing this
 - To actually understand how login systems work  
@@ -21,8 +22,24 @@ while learning Python, Flask and HTML.
 - Python  
 - Flask  
 - HTML  
+- SQLite  
 
 ## Progress
+
+### Day 5
+- Added stronger security using password hashing  
+- Added a rough draft of a user login homepage  
+- Made it so passwords are stored as hashed values in the database instead of as plain text  
+
+### Day 4
+- Added and made it easier to handle multiple usernames and passwords in the database using executemany()
+- Learned the difference between fetchone() and fetchall()
+
+
+### Day 3 
+- Added SQLite database  
+- App checks to see if user input matches any credentials in database  
+- if credentials don’t match page renders again and user can try again  
 
 ### Day 2
 - Built the login page  
@@ -33,3 +50,12 @@ while learning Python, Flask and HTML.
 - Set up Flask  
 - Made basic routes (`/`, `/data`)  
 - Got it running in the browser  
+
+## What I’ve Learned So Far
+- How login systems actually work  
+- How Flask handles GET and POST  
+- How to connect a database to a web app  
+- How user input gets checked against stored data  
+- How to make more secure passwords using hashing  
+- How to link a user to their own page after login  
+  
