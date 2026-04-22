@@ -1,8 +1,13 @@
 import sqlite3
 import hashlib
+import os
 
-conn = sqlite3.connect("users.db")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.join(BASE_DIR, "users.db")
+
+conn = sqlite3.connect(DB_PATH)
 cursor = conn.cursor()
+
 p1 = hashlib.sha256("shores".encode()).hexdigest()
 p2 = hashlib.sha256("captian".encode()).hexdigest()
 
@@ -27,6 +32,28 @@ cursor.execute("SELECT * FROM users")
 rows = cursor.fetchall()
 print(rows)
 
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS ships (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ship TEXT NOT NULL,
+    Gold INTEGER NOT NULL,
+    owner TEXT NOT NULL
+                                    
+               
+)
+""")
+
+cursor.executemany("""
+INSERT INTO ships (ship, gold, owner)
+VALUES (?, ?, ?)                 
+""", [("seaship", 1000, "pirate")])
+
+conn.commit()
+
+cursor.execute("SELECT * FROM ships")
+
+rows = cursor.fetchall()
+print(rows)
 conn.close()
 
 
