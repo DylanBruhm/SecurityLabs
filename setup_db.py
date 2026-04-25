@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS ships (
 cursor.executemany("""
 INSERT INTO ships (ship, gold, owner)
 VALUES (?, ?, ?)                 
-""", [("seaship", 1000, "pirate")])
+""", [("seaship", 10000, "pirate"), ("seabrig", 1000, "sailor")])
 
 conn.commit()
 

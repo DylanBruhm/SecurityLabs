@@ -26,6 +26,9 @@ This project is me learning by building. I’m starting simple, then I’ll be b
 
 ## Progress
 
+### Day 7
+- Improved how ship data is displayed by formatting database results into a more readable output
+
 ### Day 6
 - Replaced hardcoded user-specific homepage
 - Fixed database issues and got it working correctly

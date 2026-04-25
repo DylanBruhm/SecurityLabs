@@ -85,7 +85,13 @@ def ships():
 
     result = cursor.fetchall()
     conn.close()
-    return str(result)
+
+    output = ""
+    for row in result:    
+        output += "Ship: " + row[1] + " | Gold: " + str(row[2])
+
+    return output
+    #return str(result)
     
     
     #if  username == "pirate":
