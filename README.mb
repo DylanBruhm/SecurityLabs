@@ -12,6 +12,7 @@ This project is me learning by building. I’m starting simple, then I’ll be b
 - App checks if credentials match  
 - Password hashing  
 - User-specific homepage
+- Login.log form that stoes login attempts 
 
 ## Why I’m doing this
 - To actually understand how login systems work  
@@ -25,6 +26,10 @@ This project is me learning by building. I’m starting simple, then I’ll be b
 - SQLite  
 
 ## Progress
+
+### Day 8
+- Added a logins.log file that stores who tries to log in
+- Logs if it was success or failed
 
 ### Day 7
 - Improved how ship data is displayed by formatting database results into a more readable output

@@ -32,6 +32,7 @@ def login():
     if request.method == "POST":
 
         # get what user typed
+        #file = open("logins.log", "a")
         password = request.form.get("password")
         username = request.form.get("username")
         hashed_password = hashlib.sha256(password.encode()).hexdigest()
@@ -51,14 +52,26 @@ def login():
         # get result
         result = cursor.fetchone()
         conn.close()
+
+        
         
         # check result
         if result:
             session["user"] = username
+
+            with open("logins.log", "a") as file:
+                file.write(username + " success\n")
+
             return redirect(url_for("ships"))
              #return f"Welcome: {username}"
+             
         else:
+           with open("logins.log", "a") as file:
+                file.write(username + " Failed\n")
+           
            return render_template("login.html", error="Invalid login")
+        
+        
         
     return render_template("login.html")
 
