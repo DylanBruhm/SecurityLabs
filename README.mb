@@ -27,6 +27,9 @@ This project is me learning by building. I’m starting simple, then I’ll be b
 
 ## Progress
 
+### Day 9
+- logins.log also store date and local ip 
+
 ### Day 8
 - Added a logins.log file that stores who tries to log in
 - Logs if it was success or failed

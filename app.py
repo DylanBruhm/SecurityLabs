@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template, redirect, url_for, session
+from datetime import datetime
 import sqlite3
 import hashlib
 import os
@@ -7,6 +8,8 @@ app = Flask(__name__)
 app.secret_key = "pirate_secret"
 
 
+date = datetime.now()
+formatted_time = date.strftime("%Y-%m-%d %H:%M")
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(BASE_DIR, "users.db")
 
@@ -33,6 +36,7 @@ def login():
 
         # get what user typed
         #file = open("logins.log", "a")
+        local_ip = request.remote_addr
         password = request.form.get("password")
         username = request.form.get("username")
         hashed_password = hashlib.sha256(password.encode()).hexdigest()
@@ -59,15 +63,16 @@ def login():
         if result:
             session["user"] = username
 
+
             with open("logins.log", "a") as file:
-                file.write(username + " success\n")
+                file.write(username + " Success " + formatted_time + local_ip +"\n" )
 
             return redirect(url_for("ships"))
              #return f"Welcome: {username}"
              
         else:
            with open("logins.log", "a") as file:
-                file.write(username + " Failed\n")
+                file.write(username + " Failed " + formatted_time + local_ip +"\n" )
            
            return render_template("login.html", error="Invalid login")
         
