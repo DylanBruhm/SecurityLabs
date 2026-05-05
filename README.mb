@@ -13,6 +13,7 @@ This project is me learning by building. I’m starting simple, then I’ll be b
 - Password hashing  
 - User-specific homepage
 - Login.log form that stoes login attempts 
+- brute force dectector
 
 ## Why I’m doing this
 - To actually understand how login systems work  
@@ -26,6 +27,12 @@ This project is me learning by building. I’m starting simple, then I’ll be b
 - SQLite  
 
 ## Progress
+
+### Day 10
+- Added a brute force warning detector
+- Updated `logins.log` to store login attempt times
+- Added logic that checks the last 10 minutes of failed attempts
+- Shows a debug warning if there are 5 or more failed login attempts
 
 ### Day 9
 - logins.log also store date and local ip 
@@ -72,5 +79,7 @@ This project is me learning by building. I’m starting simple, then I’ll be b
 - How to connect a database to a web app  
 - How user input gets checked against stored data  
 - How to make more secure passwords using hashing  
-- How to link a user to their own page after login  
+- How to link a user to their own page after login 
+- How to store data from login attempts
+- How to dectect brtue froce attempts 
   
