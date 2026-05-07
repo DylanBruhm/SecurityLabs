@@ -28,6 +28,13 @@ This project is me learning by building. I’m starting simple, then I’ll be b
 
 ## Progress
 
+### Day 11
+- Added security dashboard page to start building SOC-style monitoring system
+- Worked on displaying recent logs from logins.log onto the website
+- Learned how Flask sessions remember logged in users
+- Practiced passing Python variables into HTML using render_template()
+- Learned how Jinja2 loops display dynamic log data on webpages 
+
 ### Day 10
 - Added a brute force warning detector
 - Updated `logins.log` to store login attempt times

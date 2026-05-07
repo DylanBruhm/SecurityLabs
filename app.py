@@ -40,6 +40,9 @@ def login():
         password = request.form.get("password")
         username = request.form.get("username")
 
+        role = ""
+
+
         hashed_password = hashlib.sha256(password.encode()).hexdigest()
 
         current_time = time.time()
@@ -137,6 +140,19 @@ def ships():
         output += "Ship: " + row[1] + " | Gold: " + str(row[2]) + "<br>"
 
     return output
+
+@app.route("/security_dashboard")
+def security_dashboard():
+
+    with open("logins.log", "r") as file:
+            lines = file.readlines()
+            last_logs = lines[-5:]
+
+            return render_template("security_dashboard.html", logs=last_logs)
+
+
+
+
 
 
 if __name__ == "__main__":
