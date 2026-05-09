@@ -40,13 +40,11 @@ def login():
         password = request.form.get("password")
         username = request.form.get("username")
 
-        role = ""
+        
 
 
         hashed_password = hashlib.sha256(password.encode()).hexdigest()
 
-        current_time = time.time()
-       
 
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
@@ -57,11 +55,14 @@ def login():
         )
 
         result = cursor.fetchone()
-        conn.close()
 
         
         if result:
             session["user"] = username
+            session["role"] = result[3]
+
+            conn.close()
+
 
             with open("logins.log", "a") as file:
                 file.write(
@@ -122,7 +123,7 @@ def ships():
         return redirect(url_for("login"))
         
     username = session["user"]
-
+    
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
@@ -143,6 +144,9 @@ def ships():
 
 @app.route("/security_dashboard")
 def security_dashboard():
+
+    if session.get("role") != "admin":
+        return redirect(url_for("login")) 
 
     with open("logins.log", "r") as file:
             lines = file.readlines()

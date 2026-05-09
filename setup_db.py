@@ -15,14 +15,15 @@ cursor.execute("""
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT NOT NULL,
-    password TEXT NOT NULL
+    password TEXT NOT NULL,
+    role TEXT NOT NULL
 )
 """)
 
 cursor.executemany("""
-INSERT INTO users (username, password)
-VALUES (?, ?)
-""", [("pirate", p1), ("sailor", p2)])
+INSERT INTO users (username, password, role)
+VALUES (?, ?, ?)
+""", [("pirate", p1, "admin"), ("sailor", p2, "basic")])
 
 conn.commit()
 
@@ -36,7 +37,7 @@ cursor.execute("""
 CREATE TABLE IF NOT EXISTS ships (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     ship TEXT NOT NULL,
-    Gold INTEGER NOT NULL,
+    gold INTEGER NOT NULL,
     owner TEXT NOT NULL
                                     
                

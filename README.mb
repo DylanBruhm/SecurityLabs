@@ -14,6 +14,7 @@ This project is me learning by building. I’m starting simple, then I’ll be b
 - User-specific homepage
 - Login.log form that stoes login attempts 
 - brute force dectector
+- roles, can only access some pages depending on your role
 
 ## Why I’m doing this
 - To actually understand how login systems work  
@@ -21,12 +22,19 @@ This project is me learning by building. I’m starting simple, then I’ll be b
 - To get comfortable with backend logic and how data flows  
 
 ## Tech
-- Python  
-- Flask  
-- HTML  
-- SQLite  
+- Python
+- Flask
+- HTML
+- SQLite
+- Hashlib
+- Sessions
 
 ## Progress
+
+### Day 12
+- added role privilges
+- made admin only acess to security dashboard
+- blocked basic users from seeing logins.log
 
 ### Day 11
 - Added security dashboard page to start building SOC-style monitoring system
@@ -89,4 +97,8 @@ This project is me learning by building. I’m starting simple, then I’ll be b
 - How to link a user to their own page after login 
 - How to store data from login attempts
 - How to dectect brtue froce attempts 
-  
+- How to assign difference role privilges based on user whose sign in
+- How Flask remembers signed in users using sessions
+- How Python interacts to SQLite databases
+- How different users can have different permissions
+- How tables, rows, and columns work in databases
