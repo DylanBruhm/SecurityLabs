@@ -153,6 +153,19 @@ def security_dashboard():
             last_logs = lines[-5:]
 
             return render_template("security_dashboard.html", logs=last_logs)
+    
+@app.route("/more_logs", methods=["POST"])  
+def more_logs():
+
+    logs_amount = int(request.form["logs_amount"])
+    logs_amount += 5
+
+    with open("logins.log", "r") as file:
+            lines = file.readlines()
+            last_logs = lines[-logs_amount:]
+
+            return render_template("security_dashboard.html", logs=last_logs) 
+
 
 
 
