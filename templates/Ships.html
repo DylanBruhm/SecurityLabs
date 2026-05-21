@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ships</title>
+</head>
+
+<body>
+
+    <h1>Your Ships</h1>
+
+    {% for ship in ships %}
+
+        <p>
+            Ship: {{ ship[1] }}
+            |
+            Gold: {{ ship[2] }}
+        </p>
+
+    {% endfor %}
+
+    <a href="{{ url_for('security_dashboard') }}">
+
+        <button>
+            Security Dashboard
+        </button>
+
+    </a>
+
+</body>
+</html>

@@ -127,6 +127,8 @@ def ships():
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
+
+
     cursor.execute(
         "SELECT * FROM ships WHERE owner = ?",
         (username,)
@@ -134,6 +136,12 @@ def ships():
 
     result = cursor.fetchall()
     conn.close()
+
+    return render_template(
+        "ships.html", 
+        ships=result
+
+    )
 
     output = ""
     # pritns ship name and inventory
@@ -166,7 +174,10 @@ def more_logs():
 
             return render_template("security_dashboard.html", logs=last_logs) 
 
+@app.route("/transfer_gold", methods=["GET","POST"])
+def transfer_gold():
 
+    
 
 
 

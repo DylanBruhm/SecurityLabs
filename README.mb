@@ -31,6 +31,14 @@ This project is me learning by building. I’m starting simple, then I’ll be b
 
 ## Progress
 
+### Day 14
+- Added aa button on `ships.html` that'll take you to `security_dashboard` when clicked
+- Added `ships.html`
+- Code loops through `ships.html` and displays the data from route `/ships`
+
+### Day 13
+- added a button that when you press it shows more logs 
+
 ### Day 12
 - added role privilges
 - made admin only acess to security dashboard
