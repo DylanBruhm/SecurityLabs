@@ -177,7 +177,24 @@ def more_logs():
 @app.route("/transfer_gold", methods=["GET","POST"])
 def transfer_gold():
 
-    
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    if request.method == "POST":
+
+        from_ship = request.form["from_ship"]
+
+        print("tyoed ship:", from_ship)
+
+        cursor.execute(
+            "SELECT gold FROM ships WHERE ship = ?",
+            (from_ship,)
+        )
+
+        result = cursor.fetchall()
+        print("herrre",result)
+
+    return redirect(url_for("ships"))
 
 
 

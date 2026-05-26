@@ -17,14 +17,28 @@
             Gold: {{ ship[2] }}
         </p>
 
+        
+        <form method="POST" action=" {{ url_for('transfer_gold') }}">
+            
+            <input type="hidden" name="from_ship" value="{{ ship[1] }}">
+            
+            <input name="to_ship" placeholder="Ship receiving gold">
+            
+            <input name="amount" placeholder="Gold amount">  
+            
+            <button type="submit">
+                Transfer Gold
+            </button>
+            
+        </form>
+        
     {% endfor %}
-
-    <a href="{{ url_for('security_dashboard') }}">
-
-        <button>
-            Security Dashboard
-        </button>
-
+        <a href="{{ url_for('security_dashboard') }}">
+            
+            <button>
+                Security Dashboard
+            </button>
+            
     </a>
 
 </body>
