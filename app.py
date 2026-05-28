@@ -183,6 +183,8 @@ def transfer_gold():
     if request.method == "POST":
 
         from_ship = request.form["from_ship"]
+        to_ship = request.form["to_ship"]
+        amount = request.form["amount"]
 
         print("tyoed ship:", from_ship)
 
@@ -191,8 +193,58 @@ def transfer_gold():
             (from_ship,)
         )
 
-        result = cursor.fetchall()
-        print("herrre",result)
+        
+        try:
+            sent_gold = int(amount)
+
+        except:
+            print("not a number")
+            return redirect(url_for("ships")) 
+        
+        result = cursor.fetchone()
+        if result is None:
+
+            print("failed")
+            return redirect(url_for("ships"))
+        
+        gold = result[0]
+
+        new_gold = gold - sent_gold
+
+        if sent_gold <= 0:
+            print("invalid amount")
+            return redirect(url_for("ships"))
+        
+
+        print("herrre",sent_gold, gold, to_ship)
+        if gold < sent_gold: 
+            print("failed")
+            return redirect(url_for("ships"))
+
+        cursor.execute(
+            "SELECT gold FROM ships WHERE ship = ?",
+            (to_ship,)
+
+        )
+        receiver_result = cursor.fetchone()
+        if receiver_result is None:
+
+            print("failed")
+            return redirect(url_for("ships"))
+
+        receiver_ship = receiver_result[0]
+        receiver_new_gold = sent_gold + receiver_ship
+        cursor.execute(
+            "UPDATE ships SET gold = ? WHERE ship = ?",
+            (receiver_new_gold, to_ship)
+
+        )
+        cursor.execute(
+            "UPDATE ships SET gold = ? WHERE ship = ?",
+            (new_gold, from_ship)
+        )
+        conn.commit()
+
 
     return redirect(url_for("ships"))
 
