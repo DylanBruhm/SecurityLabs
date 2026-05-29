@@ -177,6 +177,10 @@ def more_logs():
 @app.route("/transfer_gold", methods=["GET","POST"])
 def transfer_gold():
 
+
+    date = datetime.now()
+    formatted_time = date.strftime("%Y-%m-%d %H:%M")
+    
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
@@ -243,6 +247,18 @@ def transfer_gold():
             "UPDATE ships SET gold = ? WHERE ship = ?",
             (new_gold, from_ship)
         )
+
+        with open("Gold.log", "a") as file:
+            file.write(
+                    " Time - " + formatted_time +
+                    " User - " + from_ship +
+                    " Gold: " + str(new_gold) + 
+                    " To " + to_ship + 
+                    " - Sent Gold: " + str(sent_gold) + " - " +
+                      to_ship + " Gold: " + str(receiver_new_gold) +"\n"
+                )
+
+
         conn.commit()
 
 
