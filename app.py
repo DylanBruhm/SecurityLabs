@@ -3,7 +3,6 @@ from datetime import datetime, timedelta
 import sqlite3
 import hashlib
 import os
-import time
 
 app = Flask(__name__)
 app.secret_key = "pirate_secret"
@@ -190,7 +189,7 @@ def transfer_gold():
         to_ship = request.form["to_ship"]
         amount = request.form["amount"]
 
-        print("tyoed ship:", from_ship)
+        print("typed ship:", from_ship)
 
         cursor.execute(
             "SELECT gold FROM ships WHERE ship = ?",
@@ -264,8 +263,24 @@ def transfer_gold():
 
     return redirect(url_for("ships"))
 
+@app.route("/messages")
+def messages():
+    
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
 
+    cursor.execute(
+        "SELECT * FROM messages WHERE receiver = ?",
+        (session["user"],)
+    )
+    result = cursor.fetchall()
 
+    conn.close()
+
+    return render_template(
+        "messages.html",
+        messages = result
+    )
 
 
 if __name__ == "__main__":

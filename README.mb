@@ -31,6 +31,13 @@ This project is me learning by building. I’m starting simple, then I’ll be b
 
 ## Progress
 
+### Day 18
+- Added basic email system
+- Created messages table and inbox route
+- Added email button to navigation
+- Messages now display based on the logged-in user
+- Added sender, receiver, subject, body, and timestamp fields
+
 ### Day 17
 - Added a gold transfer logging system that captures the sender, receiver, amount of gold transferred, and both ships updated gold totals after the transaction.
 

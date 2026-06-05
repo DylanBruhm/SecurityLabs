@@ -31,8 +31,19 @@
             </button>
             
         </form>
+
         
-    {% endfor %}
+        
+        
+        {% endfor %}
+
+        <a href="{{ url_for('messages') }}">
+
+            <button>
+                Emails
+            </button>
+    </a>
+
         <a href="{{ url_for('security_dashboard') }}">
             
             <button>
