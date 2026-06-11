@@ -31,6 +31,10 @@ This project is me learning by building. I’m starting simple, then I’ll be b
 
 ## Progress
 
+### Update 19 
+- Added alert system. Large gold transfers (500+) now generate alerts that are stored in the database and displayed on an alerts page.
+- many others alerts to come 
+
 ### Day 18
 - Added basic email system
 - Created messages table and inbox route

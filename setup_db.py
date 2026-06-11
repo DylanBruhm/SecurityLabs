@@ -71,6 +71,23 @@ VALUES (?, ?, ?, ?, ?)
 
 conn.commit()
 
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS alerts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT , 
+    severity TEXT NOT NULL,
+    title TEXT NOT NULL,
+    description TEXT,        
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    status TEXT NOT NULL       
+)
+
+""")
+
+cursor.execute("""
+INSERT INTO alerts (severity, title, description, status)
+VALUES (?, ?, ?, ?)
+""", ("high", "Brute", "multiple login atempts", "open"))
+
 cursor.execute("SELECT * FROM ships")
 
 rows = cursor.fetchall()

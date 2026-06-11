@@ -7,18 +7,26 @@
     {% for message in messages %}
 
         <p>
-            sender {{ message[1] }}
+            sender {{ message[1] }} </p>
             
-            receiver {{ message[2] }}
+        <p>    receiver {{ message[2]}} </p>
 
-            subject {{ message[3] }}
+        <p>    subject {{ message[3] }} </p>
 
-            body {{ message[4] }}
+        <p>   body {{ message[4] }} </p>
 
-            sent_at {{ message[5] }}  
+        <p>   sent_at {{ message[5] }}  </p>
 
-        </p>
+        
 
     {% endfor %}
+
+    <a href="{{ url_for('ships') }}">
+
+            <button>
+                Return
+            </button>
+    </a>
 </body>
+
 </html>

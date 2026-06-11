@@ -242,6 +242,15 @@ def transfer_gold():
             (receiver_new_gold, to_ship)
 
         )
+        if sent_gold >= 500:
+
+            cursor.execute("""
+            INSERT INTO alerts (severity, title, description, status)
+            VALUES (?, ?, ?, ?)
+            """, ("mid", "Large amount", "", "open"))
+
+            conn.commit()
+            
         cursor.execute(
             "UPDATE ships SET gold = ? WHERE ship = ?",
             (new_gold, from_ship)
@@ -282,6 +291,22 @@ def messages():
         messages = result
     )
 
+@app.route("/alerts")
+def alerts():
+
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM alerts")
+
+    result = cursor.fetchall()
+
+    conn.close()
+
+    return render_template(
+        "alerts.html",
+        alerts = result
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)

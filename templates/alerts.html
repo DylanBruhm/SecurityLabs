@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Alerts </title>
+</head>   
+<body>
+
+    <table>
+        <th> Alerts
+        </th>
+        {% for alert in alerts %}
+        <tr>
+            <td>{{ alert[1] }}</td>
+            <td>{{ alert[2] }}</td>
+            <td>{{ alert[3] }}</td>
+            <td>{{ alert[4] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+
+</body>
+
+
+
+
+
+
+</html>
