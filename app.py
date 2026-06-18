@@ -176,10 +176,10 @@ def more_logs():
 @app.route("/transfer_gold", methods=["GET","POST"])
 def transfer_gold():
 
-
     date = datetime.now()
     formatted_time = date.strftime("%Y-%m-%d %H:%M")
-    
+    ten_mins_ago = date - timedelta(minutes=10)
+
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
@@ -196,52 +196,62 @@ def transfer_gold():
             (from_ship,)
         )
 
-        
         try:
             sent_gold = int(amount)
 
         except:
             print("not a number")
-            return redirect(url_for("ships")) 
-        
+            conn.close()
+            return redirect(url_for("ships"))
+
         result = cursor.fetchone()
         if result is None:
 
             print("failed")
+            conn.close()
             return redirect(url_for("ships"))
-        
+
         gold = result[0]
 
         new_gold = gold - sent_gold
 
         if sent_gold <= 0:
             print("invalid amount")
+            conn.close()
             return redirect(url_for("ships"))
-        
 
-        print("herrre",sent_gold, gold, to_ship)
-        if gold < sent_gold: 
+        print("herrre", sent_gold, gold, to_ship)
+        if gold < sent_gold:
             print("failed")
+            conn.close()
             return redirect(url_for("ships"))
 
         cursor.execute(
             "SELECT gold FROM ships WHERE ship = ?",
             (to_ship,)
-
         )
+
         receiver_result = cursor.fetchone()
         if receiver_result is None:
 
             print("failed")
+            conn.close()
             return redirect(url_for("ships"))
 
         receiver_ship = receiver_result[0]
         receiver_new_gold = sent_gold + receiver_ship
+
         cursor.execute(
             "UPDATE ships SET gold = ? WHERE ship = ?",
             (receiver_new_gold, to_ship)
-
         )
+
+        cursor.execute(
+            "UPDATE ships SET gold = ? WHERE ship = ?",
+            (new_gold, from_ship)
+        )
+
+        # large gold transfer alert
         if sent_gold >= 500:
 
             cursor.execute("""
@@ -249,28 +259,80 @@ def transfer_gold():
             VALUES (?, ?, ?, ?)
             """, ("mid", "Large amount", "", "open"))
 
-            conn.commit()
-            
-        cursor.execute(
-            "UPDATE ships SET gold = ? WHERE ship = ?",
-            (new_gold, from_ship)
-        )
-
+        # write transfer to Gold.log
         with open("Gold.log", "a") as file:
             file.write(
-                    " Time - " + formatted_time +
-                    " User - " + from_ship +
-                    " Gold: " + str(new_gold) + 
-                    " To " + to_ship + 
-                    " - Sent Gold: " + str(sent_gold) + " - " +
-                      to_ship + " Gold: " + str(receiver_new_gold) +"\n"
-                )
+                "Time - " + formatted_time +
+                " User - " + from_ship +
+                " Gold: " + str(new_gold) +
+                " To " + to_ship +
+                " - Sent Gold: " + str(sent_gold) + " - " +
+                to_ship + " Gold: " + str(receiver_new_gold) + "\n"
+            )
+
+        attempts = 0
+        count = 0
+
+        with open("Gold.log", "r") as file:
+            for line in file:
+                parts = line.split()
+
+                if not parts:
+                    continue
+
+                # if less then 9 columns continue
+                if len(parts) < 9:
+                    continue
+
+                # time and date as string
+                log_alert_text = parts[2] + " " + parts[3]
+
+                # take string and make it into a readable time python can use
+                alert_time = datetime.strptime(log_alert_text, "%Y-%m-%d %H:%M")
+
+                user_logged = parts[6]
+
+        
+               
+                # count transfers from same ship in last 10 minutes
+                if user_logged == from_ship and alert_time >= ten_mins_ago:
+                    attempts += 1
+
+
+                print("attempts:", attempts, "user:", user_logged)
+                if attempts >= 5:
+                    cursor.execute("""
+                    SELECT COUNT(*)
+                    FROM alerts WHERE title = ?
+                    AND description = ?
+                    AND created_at >= datetime('now', '-1 minutes')
+                    """, ("Many transfers", from_ship))
+                
+
+
+                    already_alerted = cursor.fetchone()[0]
+
+                    if already_alerted == 0:
+                        count += 1
+                        print("count", count)
+
+                        cursor.execute("""
+                        INSERT INTO alerts (severity, title, description, status)
+                        VALUES (?, ?, ?, ?)
+                        """, ("low", "Many transfers", from_ship, "open"))
+
+                    attempts = 0
+                    break
+
+
 
 
         conn.commit()
+        conn.close()
+
+        return redirect(url_for("ships"))
 
 
-    return redirect(url_for("ships"))
 
 @app.route("/messages")
 def messages():

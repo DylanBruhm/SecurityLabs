@@ -31,6 +31,10 @@ This project is me learning by building. I’m starting simple, then I’ll be b
 
 ## Progress
 
+### Update 20
+- added an alerts system that detects many small transfers 
+- made so no duplicate reports are shown 
+
 ### Update 19 
 - Added alert system. Large gold transfers (500+) now generate alerts that are stored in the database and displayed on an alerts page.
 - many others alerts to come 
